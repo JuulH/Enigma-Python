@@ -85,7 +85,7 @@ def ImportSettings():
             rRingOffset = int(file.readline().strip())
             file.close()
         except Exception as e:
-            print(e)
+            #print(e)
             file.close()
             Scramble()
 
@@ -164,6 +164,7 @@ while True:
     # Scramble settings
     elif menu_input == "2":
         Scramble()
+        ExportSettings()
         print("Settings scrambled.\n")
 
     # Exit
