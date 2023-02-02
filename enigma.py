@@ -6,24 +6,29 @@ rotorR = "EKMFLGDQVZNTOWYHXUSPAIBRCJ,.!?- "
 reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT,.!?- "
 
 # Rotor offsets
-lOffset = 0
-mOffset = 0
-rOffset = 0
+lOffset = 4
+mOffset = 12
+rOffset = 20
 
 # The plugboard swaps characters that are connected together
 plugboard = {
     "A" : "B",
-    "B" : "A"
+    "B" : "A",
+    "F" : "P",
+    "P" : "F",
+    "G" : "V",
+    "V" : "G",
+    "Q" : "M",
+    "M" : "Q",
 }
 
 input_text = input("Enter text to encrypt: ").upper()
+output_text = ""
 
 # Remove any characters that are not in the alphabet
 for char in input_text:
     if char not in alphabet:
         input_text = input_text.replace(char, "")
-
-output_text = ""
 
 # Encrypt or decrypt input text - enigma works the same both ways
 for char in input_text:
@@ -31,7 +36,7 @@ for char in input_text:
     if char in plugboard:
         char = plugboard[char]
 
-    # Step rotors
+    # Step rotors before connection
     rOffset = (rOffset + 1) % 26
     if rOffset == 0:
         mOffset = (mOffset + 1) % 26 # Full revolution of first rotor
@@ -59,4 +64,4 @@ for char in input_text:
 
     output_text += char
 
-print(output_text)
+print(f"\nYour coded text is: \n{output_text}\n")
