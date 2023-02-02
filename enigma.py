@@ -1,22 +1,33 @@
 # Enigma Machine in Python
-alphabet = "abcdefghijklmnopqrstuvwxyz"
-rotorL = "BDFHJLCPRTXVZNYEIWGAKMUSQO"
-rotorM = "AJDKSIRUXBLHWTMCQGZNPYFVOE"
-rotorR = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ,.!?- " # Encryption input and decryption output alphabet
+rotorL = "BDFHJLCPRTXVZNYEIWGAKMUSQO,.!?- "
+rotorM = "AJDKSIRUXBLHWTMCQGZNPYFVOE,.!?- "
+rotorR = "EKMFLGDQVZNTOWYHXUSPAIBRCJ,.!?- "
+reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT,.!?- "
 
+# Rotor offsets
 lOffset = 0
 mOffset = 0
 rOffset = 0
 
+# The plugboard swaps characters that are connected together
 plugboard = {
-    "a": "b",
-    "b" : "a"
+    "A" : "B",
+    "B" : "A"
 }
 
-input_text = input("Enter text to encrypt: ")
+input_text = input("Enter text to encrypt: ").upper()
+
+# Remove any characters that are not in the alphabet
+for char in input_text:
+    if char not in alphabet:
+        input_text = input_text.replace(char, "")
+
 output_text = ""
 
+# Encrypt or decrypt input text - enigma works the same both ways
 for char in input_text:
+    # Pass char through plugboard
     if char in plugboard:
         char = plugboard[char]
 
@@ -30,7 +41,22 @@ for char in input_text:
                 mOffset = 0 # Full revolution of third rotor also resets second rotor
 
     # Pass char through rotors
-    
+    char = rotorR[(alphabet.index(char) + rOffset) % len(alphabet)] # Right rotor
+    char = rotorM[(alphabet.index(char) + mOffset) % len(alphabet)] # Middle rotor
+    char = rotorL[(alphabet.index(char) + lOffset) % len(alphabet)] # Left rotor
+
+    # Pass char through reflector
+    char = reflector[alphabet.index(char)]
+
+    # Pass char through rotors in reverse
+    char = alphabet[(rotorL.index(char) - lOffset) % len(alphabet)] # Left rotor
+    char = alphabet[(rotorM.index(char) - mOffset) % len(alphabet)] # Middle rotor
+    char = alphabet[(rotorR.index(char) - rOffset) % len(alphabet)] # Right rotor
+
+    # Pass char through plugboard in reverse
+    if char in plugboard:
+        char = plugboard[char]
+
     output_text += char
 
 print(output_text)
