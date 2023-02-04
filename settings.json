@@ -1,0 +1,26 @@
+{
+    "rotorL": "BDFHJLCPRTXVZNYEIWGAKMUSQO",
+    "rotorM": "AJDKSIRUXBLHWTMCQGZNPYFVOE",
+    "rotorR": "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
+    "reflector": "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+    "plugboard": {
+        "A": "B",
+        "B": "A",
+        "F": "P",
+        "P": "F",
+        "G": "V",
+        "V": "G",
+        "Q": "M",
+        "M": "Q"
+    },
+    "offsets": [
+        8,
+        4,
+        6
+    ],
+    "ringOffsets": [
+        4,
+        6,
+        4
+    ]
+}
