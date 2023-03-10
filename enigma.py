@@ -42,24 +42,6 @@ def ListToString(list):
 def Scramble():
     global rotorL, rotorM, rotorR, reflector, lOffset, mOffset, rOffset, lRingOffset, mRingOffset, rRingOffset, startOffsets
 
-    # # Convert rotors to lists to allow shuffling
-    # rotorL = list(alphabet)
-    # rotorM = list(alphabet)
-    # rotorR = list(alphabet)
-    # reflector = list(alphabet)
-
-    # # Shuffle each rotor and reflector
-    # random.shuffle(rotorL)
-    # random.shuffle(rotorM)
-    # random.shuffle(rotorR)
-    # random.shuffle(reflector)
-
-    # # Convert back to string
-    # rotorL = ListToString(rotorL)
-    # rotorM = ListToString(rotorM)
-    # rotorR = ListToString(rotorR)
-    # reflector = ListToString(reflector)
-
     # Randomize rotors
     lOffset = random.randint(0, len(rotorL) - 1)
     mOffset = random.randint(0, len(rotorM) - 1)
@@ -84,7 +66,7 @@ def ExportSettings():
         "ringOffsets" : [lRingOffset, mRingOffset, rRingOffset]
     }
 
-    # Export rotors and reflector to a file
+    # Export settings to json file
     with open("settings.json", "w") as file:
         file.write(json.dumps(settings, indent=4))
         file.close()
@@ -92,7 +74,7 @@ def ExportSettings():
 def ImportSettings():
     global rotorL, rotorM, rotorR, reflector, plugboard, lOffset, mOffset, rOffset, lRingOffset, mRingOffset, rRingOffset, startOffsets
 
-    # Import rotors and reflector from a file
+    # Import settings from json file
     try:
         with open("settings.json", "r") as file:
             try:
@@ -115,6 +97,7 @@ def ImportSettings():
                 file.close()
 
             except Exception as e:
+                # File couldn't be read, create new settings
                 print(e)
                 file.close()
                 Scramble()
